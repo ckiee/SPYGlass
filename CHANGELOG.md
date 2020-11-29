@@ -1,3 +1,59 @@
+# [v3.2.0](https://github.com/SPGoding/datapack-language-server/compare/v3.1.2...v3.2.0) (2020-11-29)
+
+## ✨ New Features
+- [`4ba82c0`](https://github.com/SPGoding/datapack-language-server/commit/4ba82c0)  Extend the current Naming Convention config (#774) (Issues: [`#774`](https://github.com/SPGoding/datapack-language-server/issues/774))
+
+## 🐛 Bug Fixes
+- [`c15e3c9`](https://github.com/SPGoding/datapack-language-server/commit/c15e3c9)  Fix crashing when visibility is somehow null 
+- [`d9d27e2`](https://github.com/SPGoding/datapack-language-server/commit/d9d27e2)  Fix not quoting pure numbers (Issues: [`#769`](https://github.com/SPGoding/datapack-language-server/issues/769))
+
+# [v3.1.2](https://github.com/SPGoding/datapack-language-server/compare/v3.1.1...v3.1.2) (2020-11-22)
+
+## 🐛 Bug Fixes
+- [`1fa892c`](https://github.com/SPGoding/datapack-language-server/commit/1fa892c)  Fix nameOf* lint settings not working (#755) (Issues: [`#755`](https://github.com/SPGoding/datapack-language-server/issues/755) [`#750`](https://github.com/SPGoding/datapack-language-server/issues/750))
+- [`5fd95de`](https://github.com/SPGoding/datapack-language-server/commit/5fd95de)  Fix bad support for tab indents in IMP-Doc (Issues: [`#748`](https://github.com/SPGoding/datapack-language-server/issues/748))
+- [`91ae839`](https://github.com/SPGoding/datapack-language-server/commit/91ae839)  Fix flawed @mcschema/locales support (Issues: [`#756`](https://github.com/SPGoding/datapack-language-server/issues/756))
+- [`202420c`](https://github.com/SPGoding/datapack-language-server/commit/202420c)  Fix formatting of commands attached to IMP-Doc (Issues: [`#751`](https://github.com/SPGoding/datapack-language-server/issues/751))
+- [`d9f5934`](https://github.com/SPGoding/datapack-language-server/commit/d9f5934)  Support multiple selectors for /execute facing (Issues: [`#765`](https://github.com/SPGoding/datapack-language-server/issues/765))
+- [`641c68c`](https://github.com/SPGoding/datapack-language-server/commit/641c68c)  Fix no hover for IMP-Doc in beta (Issues: [`#758`](https://github.com/SPGoding/datapack-language-server/issues/758))
+
+# [v3.1.1](https://github.com/SPGoding/datapack-language-server/compare/v3.1.0...v3.1.1) (2020-11-12)
+
+## 🐛 Bug Fixes
+- [`6e57725`](https://github.com/SPGoding/datapack-language-server/commit/6e57725)  Fix range for JSON error goes to Infinity (Issues: [`#742`](https://github.com/SPGoding/datapack-language-server/issues/742))
+- [`26b53d8`](https://github.com/SPGoding/datapack-language-server/commit/26b53d8)  Fix not showing pop-ups for 3.1.0 Release Notes (Issues: [`#745`](https://github.com/SPGoding/datapack-language-server/issues/745))
+- [`75175cf`](https://github.com/SPGoding/datapack-language-server/commit/75175cf)  Move default support to the latest release (Issues: [`#746`](https://github.com/SPGoding/datapack-language-server/issues/746))
+
+## 🚑 Critical Hotfixes
+- [`ae5315b`](https://github.com/SPGoding/datapack-language-server/commit/ae5315b)  Fix crashes in JSON files (Issues: [`#747`](https://github.com/SPGoding/datapack-language-server/issues/747))
+
+# [v3.1.0](https://github.com/SPGoding/datapack-language-server/compare/v3.0.9...v3.1.0) (2020-11-12)
+
+## ✨ New Features
+- [`b374c7c`](https://github.com/SPGoding/datapack-language-server/commit/b374c7c)  Add quickfixes for /replaceitem (Issues: [`#738`](https://github.com/SPGoding/datapack-language-server/issues/738))
+- [`bb97771`](https://github.com/SPGoding/datapack-language-server/commit/bb97771)  Show warnings when file path doesn&#x27;t seem right (Issues: [`#736`](https://github.com/SPGoding/datapack-language-server/issues/736))
+
+## 🐛 Bug Fixes
+- [`a9772bc`](https://github.com/SPGoding/datapack-language-server/commit/a9772bc)  Stop referencing dimension_type registry (Issues: [`#739`](https://github.com/SPGoding/datapack-language-server/issues/739))
+- [`a39b78a`](https://github.com/SPGoding/datapack-language-server/commit/a39b78a)  Stop validating empty NBT strings (Issues: [`#703`](https://github.com/SPGoding/datapack-language-server/issues/703))
+
+# [v3.0.9](https://github.com/SPGoding/datapack-language-server/compare/v3.0.8...v3.0.9) (2020-11-11)
+
+## 🐛 Bug Fixes
+- [`e27c993`](https://github.com/SPGoding/datapack-language-server/commit/e27c993)  Fix not executable on *nix; add shebang to bin/server 
+- [`e8bf056`](https://github.com/SPGoding/datapack-language-server/commit/e8bf056)  Fix not supporting item modifiers and /item
+
+# [v3.0.8](https://github.com/SPGoding/datapack-language-server/compare/v3.0.7...v3.0.8) (2020-11-10)
+
+## 🐛 Bug Fixes
+- [`0623039`](https://github.com/SPGoding/datapack-language-server/commit/0623039)  Fix not completing vanilla structures (Issues: [`#661`](https://github.com/SPGoding/datapack-language-server/issues/661) [`#662`](https://github.com/SPGoding/datapack-language-server/issues/662))
+- [`8411c5d`](https://github.com/SPGoding/datapack-language-server/commit/8411c5d)  Fix unable to remove descriptions from #declare (Issues: [`#678`](https://github.com/SPGoding/datapack-language-server/issues/678))
+- [`122debe`](https://github.com/SPGoding/datapack-language-server/commit/122debe)  Fix unable to add IMP-Doc to #alias commands (Issues: [`#669`](https://github.com/SPGoding/datapack-language-server/issues/669))
+
+## 🚑 Critical Hotfixes
+- [`b9269c9`](https://github.com/SPGoding/datapack-language-server/commit/b9269c9)  Fix crashing when strings in JSON aren&#x27;t closed (Issues: [`#671`](https://github.com/SPGoding/datapack-language-server/issues/671))
+- [`364e6a2`](https://github.com/SPGoding/datapack-language-server/commit/364e6a2)  Fix showing errors for Unicode escapes in JSONs (Issues: [`#665`](https://github.com/SPGoding/datapack-language-server/issues/665))
+
 # [v3.0.7](https://github.com/SPGoding/datapack-language-server/compare/v3.0.6...v3.0.7) (2020-10-21)
 
 ## 🐛 Bug Fixes

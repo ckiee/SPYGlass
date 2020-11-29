@@ -77,6 +77,7 @@ export interface LintConfig {
     nameOfNbtCompoundTagKeys: DiagnosticConfig<NamingConventionConfig>,
     nameOfTags: DiagnosticConfig<NamingConventionConfig>,
     nameOfTeams: DiagnosticConfig<NamingConventionConfig>,
+    nameOfScoreHolders: DiagnosticConfig<NamingConventionConfig>,
     nbtArrayLengthCheck: DiagnosticConfig<true>,
     nbtBoolean: DiagnosticConfig<boolean>,
     nbtCompoundKeyQuote: DiagnosticConfig<boolean>,
@@ -181,14 +182,14 @@ export const VanillaConfig: Config = {
     env: {
         permissionLevel: 2,
         dataSource: 'GitHub',
-        dataVersion: 'Latest snapshot',
-        cmdVersion: '1.17',
+        dataVersion: 'Latest release',
+        cmdVersion: '1.16',
         defaultVisibility: 'public',
         dependsOnVanilla: true,
         detectionDepth: 1,
         exclude: [],
         include: [],
-        jsonVersion: '1.17',
+        jsonVersion: '1.16',
         language: 'Default'
     },
     lint: {
@@ -227,6 +228,7 @@ export const VanillaConfig: Config = {
         nameOfObjectives: null,
         nameOfTags: null,
         nameOfTeams: null,
+        nameOfScoreHolders: null,
         nbtArrayLengthCheck: ['warning', true],
         nbtBoolean: null,
         nbtCompoundKeyQuote: null,

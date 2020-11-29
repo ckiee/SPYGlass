@@ -95,7 +95,7 @@ export class CommandParser implements Parser<CommandComponent> {
         if ((backupReader.peek() === '#' || (shouldContinue && reader.cursor === start)) && node.errors.length) {
             return {
                 data: CommandComponent.create(
-                    [{ data: backupReader.readRemaining(), parser: 'string' }],
+                    [{ data: backupReader.readRemaining(), parser: 'string', range: node.range }],
                     {
                         range: node.range,
                         hint: node.hint,
@@ -142,15 +142,16 @@ export class CommandParser implements Parser<CommandComponent> {
                     const unit = category![alias]!
                     completions.push({
                         label: alias,
-                        insertText: unit.doc,
+                        insertText: unit.foo,
                         start: reader.cursor, end: reader.cursor,
-                        detail: unit.doc,
+                        detail: unit.foo,
+                        documentation: unit.doc,
                         kind: CompletionItemKind.Snippet
                     })
                 }
             }
             //#endregion
-            combineCommand(parsedLine, CommandComponent.create([{ data, parser: parser.identity }], { cache, completions, errors, tokens }))
+            combineCommand(parsedLine, CommandComponent.create([{ data, parser: parser.identity, range: { start, end: reader.cursor } }], { cache, completions, errors, tokens }))
             if (start <= ctx.cursor && ctx.cursor <= reader.cursor) {
                 parsedLine.hint.options.push([
                     parser.toHint(key, optional),

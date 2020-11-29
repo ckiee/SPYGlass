@@ -1,5 +1,5 @@
 import { DiagnosticSeverity } from 'vscode-languageserver'
-import { getArgOrDefault } from '../CommandTree'
+import { getArgData, getArgOrDefault } from '../CommandTree'
 import { locale } from '../locales'
 import { NodeRange, VectorNode } from '../nodes'
 import { EntityNode } from '../nodes/EntityNode'
@@ -30,14 +30,14 @@ import { TextComponentArgumentParser } from '../parsers/TextComponentArgumentPar
 import { TimeArgumentParser } from '../parsers/TimeArgumentParser'
 import { UuidArgumentParser } from '../parsers/UuidArgumentParser'
 import { VectorArgumentParser } from '../parsers/VectorArgumentParser'
-import { AlwaysValidates, ParsingError, Switchable } from '../types'
+import { AlwaysValidates, ErrorCode, ParsingError, Switchable } from '../types'
 import { CacheType, DeclarableTypes } from '../types/ClientCache'
 import { CommandTree as ICommandTree } from '../types/CommandTree'
 import { TokenType } from '../types/Token'
 import { getNbtdocRegistryId } from '../utils'
 
 /**
- * Command tree of Minecraft Java Edition 20w45a commands.
+ * Command tree of Minecraft Java Edition 20w46a commands.
  */
 /* istanbul ignore next */
 export const CommandTree: ICommandTree = {
@@ -1051,6 +1051,66 @@ export const CommandTree: ICommandTree = {
                 }
             }
         },
+        item: {
+            parser: new LiteralArgumentParser('item'),
+            children: {
+                target: {
+                    template: 'item_holder',
+                    children: {
+                        slot: {
+                            parser: new ItemSlotArgumentParser(),
+                            children: {
+                                [Switchable]: true,
+                                copy: {
+                                    parser: new LiteralArgumentParser('copy'),
+                                    children: {
+                                        source: {
+                                            template: 'item_holder',
+                                            children: {
+                                                slot: {
+                                                    parser: new ItemSlotArgumentParser(),
+                                                    executable: true,
+                                                    children: {
+                                                        modifier: {
+                                                            parser: new IdentityArgumentParser('$item_modifier'),
+                                                            executable: true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                modify: {
+                                    parser: new LiteralArgumentParser('modify'),
+                                    children: {
+                                        modifier: {
+                                            parser: new IdentityArgumentParser('$item_modifier'),
+                                            executable: true
+                                        }
+                                    }
+                                },
+                                replace: {
+                                    parser: new LiteralArgumentParser('replace'),
+                                    children: {
+                                        item: {
+                                            parser: new ItemArgumentParser(false),
+                                            executable: true,
+                                            children: {
+                                                count: {
+                                                    parser: new NumberArgumentParser('integer', 0, 64),
+                                                    executable: true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         kick: {
             parser: new LiteralArgumentParser('kick'),
             permission: 3,
@@ -1339,10 +1399,28 @@ export const CommandTree: ICommandTree = {
                                 item: {
                                     parser: new ItemArgumentParser(false),
                                     executable: true,
+                                    run: ({ data, errors }) => {
+                                        if (errors.length === 0) {
+                                            errors.push(new ParsingError(
+                                                { start: getArgData(data, 5)!.range.start, end: getArgData(data, 1)!.range.end },
+                                                locale('datafix.error.command-replaceitem'),
+                                                undefined, undefined, ErrorCode.CommandReplaceitem
+                                            ))
+                                        }
+                                    },
                                     children: {
                                         count: {
                                             parser: new NumberArgumentParser('integer', 0, 64),
-                                            executable: true
+                                            executable: true,
+                                            run: ({ data, errors }) => {
+                                                if (errors.length === 0) {
+                                                    errors.push(new ParsingError(
+                                                        { start: getArgData(data, 6)!.range.start, end: getArgData(data, 1)!.range.end },
+                                                        locale('datafix.error.command-replaceitem'),
+                                                        undefined, undefined, ErrorCode.CommandReplaceitem
+                                                    ))
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -2308,7 +2386,7 @@ export const CommandTree: ICommandTree = {
                                                 const key = `alias/${parser}` as CacheType
                                                 parsedLine.cache = {
                                                     [key]: {
-                                                        [alias.valueOf()]: { doc: value.valueOf(), def: [alias[NodeRange]], ref: [] }
+                                                        [alias.valueOf()]: { foo: value.valueOf(), def: [alias[NodeRange]], ref: [] }
                                                     }
                                                 }
                                             }
@@ -2723,7 +2801,7 @@ export const CommandTree: ICommandTree = {
                     parser: new LiteralArgumentParser('entity'),
                     children: {
                         target: {
-                            parser: new EntityArgumentParser('single', 'entities'),
+                            parser: new EntityArgumentParser('multiple', 'entities'),
                             children: {
                                 eyes_feet: {
                                     parser: new LiteralArgumentParser('eyes', 'feet'),
@@ -2865,7 +2943,7 @@ export const CommandTree: ICommandTree = {
                             children: {
                                 path: {
                                     parser: ({ data }) => {
-                                        const type = getArgOrDefault(data, 2, 'block') as 'block' | 'entity' | 'storage' as 'block' | 'entity' | 'storage'
+                                        const type = getArgOrDefault(data, 2, 'block') as 'block' | 'entity' | 'storage'
                                         if (type === 'entity') {
                                             const entity = getArgOrDefault<EntityNode>(data, 1, new EntityNode())
                                             const id = getNbtdocRegistryId(entity)

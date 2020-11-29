@@ -714,7 +714,7 @@ export class NbtdocHelper {
             case 'minecraft:block_entity':
                 return 'minecraft:block_entity_type'
             case 'minecraft:dimension':
-                return 'minecraft:dimension_type'
+                return '$dimension'
             case 'minecraft:entity':
                 return 'minecraft:entity_type'
             case 'minecraft:loot_table':
@@ -731,6 +731,9 @@ export class NbtdocHelper {
         const shouldValidate = this.validateNbtNodeType(ans, ctx, tag, 'String', isPredicate)
         if (shouldValidate) {
             const strTag = tag as NbtStringNode
+            if (strTag.valueOf().length === 0) {
+                return
+            }
             /// Identity.
             const subCtx = {
                 ...ctx,
@@ -835,6 +838,9 @@ export class NbtdocHelper {
             // Errors.
             /// Special cases: https://github.com/SPGoding/datapack-language-server/issues/332#issuecomment-590167678.
             const strTag = tag as NbtStringNode
+            if (strTag.valueOf().length === 0) {
+                return
+            }
             const quoteType = NbtdocHelper.getQuoteType(strTag.toString())
             if (quoteType) {
                 const subCtx = {

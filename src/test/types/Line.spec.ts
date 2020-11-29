@@ -2,7 +2,7 @@ import assert = require('power-assert')
 import { describe, it } from 'mocha'
 import { NodeRange } from '../../nodes'
 import { VanillaConfig } from '../../types/Config'
-import { combineCommand, CommandComponent, commandToLintedString } from '../../types/CommandComponent'
+import { combineCommand, CommandComponent, componentToLintedString } from '../../types/CommandComponent'
 import { ParsingError } from '../../types/ParsingError'
 import { Token, TokenType } from '../../types/Token'
 
@@ -10,7 +10,7 @@ describe('Line Tests', () => {
     describe('combineCommand() Tests', () => {
         it('Should combine data, hint, cache, completions, tokens, and errors', () => {
             const base = CommandComponent.create(
-                [{ data: 'execute', parser: 'test' }],
+                [{ data: 'execute', parser: 'test', range: { start: 0, end: 7 } }],
                 {
                     range: { start: NaN, end: NaN },
                     tokens: [new Token({ start: 0, end: 1 }, TokenType.comment)],
@@ -21,7 +21,7 @@ describe('Line Tests', () => {
                 }
             )
             const override = CommandComponent.create(
-                [{ data: 'if', parser: 'test' }],
+                [{ data: 'if', parser: 'test', range: { start: 8, end: 10 } }],
                 {
                     range: { start: NaN, end: NaN },
                     tokens: [new Token({ start: 1, end: 2 }, TokenType.string)],
@@ -32,7 +32,7 @@ describe('Line Tests', () => {
                 }
             )
             combineCommand(base, override)
-            assert.deepStrictEqual(base.data, [{ data: 'execute', parser: 'test' }, { data: 'if', parser: 'test' }])
+            assert.deepStrictEqual(base.data, [{ data: 'execute', parser: 'test', range: { start: 0, end: 7 } }, { data: 'if', parser: 'test', range: { start: 8, end: 10 } }])
             assert.deepStrictEqual(base.tokens, [new Token({ start: 0, end: 1 }, TokenType.comment), new Token({ start: 1, end: 2 }, TokenType.string)])
             assert.deepStrictEqual(base.hint.fix, ['a', 'b'])
             assert.deepStrictEqual(base.hint.options, [['c', ['c']], ['d', ['d']]])
@@ -47,19 +47,21 @@ describe('Line Tests', () => {
             assert.deepStrictEqual(base.completions, [{ label: 'a', start: 0, end: Infinity }, { label: 'b', start: 0, end: Infinity }])
         })
     })
-    describe('commandToLintedString() Tests', () => {
+    describe('componentToLintedString() Tests', () => {
         it('Should return correctly', () => {
             const line = CommandComponent.create([
                 {
                     data: 'execute',
-                    parser: 'test'
+                    parser: 'test', 
+                    range: { start: 0, end: 7 }
                 },
                 {
                     data: 'if',
-                    parser: 'test'
+                    parser: 'test', 
+                    range: { start: 8, end: 10 }
                 }
             ])
-            const actual = commandToLintedString(line, VanillaConfig.lint)
+            const actual = componentToLintedString(line, VanillaConfig.lint)
             assert(actual === 'execute if')
         })
     })

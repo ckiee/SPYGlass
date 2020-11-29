@@ -64,10 +64,6 @@ export class JsonSchemaHelper {
                         // Regular key suggestions for selected object.
                         if (selectedRange.start < ctx.cursor && ctx.cursor < selectedRange.end) {
                             // The cursor isn't out of the curly braces.
-                            /* DEBUG */ console.log('selectedPath', require('util').inspect(selectedPath, true, null))
-                            /* DEBUG */ console.log('selectedNode', require('util').inspect(selectedNode, true, null))
-                            /* DEBUG */ console.log('schema', require('util').inspect(schema, true, null))
-                            
                             ans.push(...this.suggestFromSchema(selectedPath, selectedNode, undefined, schema, ctx))
                         }
                     } else if (selectedNode.type === 'property') {
@@ -273,16 +269,22 @@ export class JsonSchemaHelper {
     private static legacyValidateFromStringValidator(rangeOfString: TextRange, stringNode: ASTNode, ctx: ParsingContext, validationOption: ValidationOption) {
         const out: { mapping: IndexMapping } = { mapping: {} }
         const rawReader = new StringReader(ctx.textDoc.getText(), rangeOfString.start, rangeOfString.end)
-        const value = rawReader.readString(out)
-        const valueReader = new StringReader(value)
-        const subCtx = {
-            ...ctx,
-            textDoc: TextDocument.create('dhp:///json_schema_helper.txt', 'plaintext', 0, value),
-            cursor: getInnerIndex(out.mapping, ctx.cursor)
-        }
-        return {
-            result: this.executeStringValidator(valueReader, subCtx, stringNode, validationOption),
-            out
+        try {
+            const value = rawReader.readString(out, true)
+            const valueReader = new StringReader(value)
+            const subCtx = {
+                ...ctx,
+                textDoc: TextDocument.create('dhp:///json_schema_helper.txt', 'plaintext', 0, value),
+                cursor: getInnerIndex(out.mapping, ctx.cursor)
+            }
+            return {
+                result: this.executeStringValidator(valueReader, subCtx, stringNode, validationOption),
+                out
+            }
+        } catch (e) {
+            const ans = LegacyValidateResult.create()
+            ans.errors.push(e)
+            return { result: ans, out }
         }
     }
 
@@ -393,8 +395,8 @@ export class JsonSchemaHelper {
 
     private static convertSchemaError({ path, params, error }: PathError, node: ASTNode | undefined) {
         const pathElements = path.getArray()
-        const range = node ? this.getNodeRange(this.navigateNodes(node, pathElements)) : { start: 0, end: Infinity }
-        let message = locale(error, params) ?? (
+        const range = node ? this.getNodeRange(this.navigateNodes(node, pathElements)) : { start: 0, end: 1 }
+        let message = locale(`json.${error}`, ...(params ?? [])) ?? (
             console.error('[convertSchemaError]', new Error(`Unknown JSON schema error “${error}”`)),
             ''
         )
@@ -414,9 +416,9 @@ export class JsonSchemaHelper {
         let childNode: ASTNode | undefined
         const ele = path[0]
         if (typeof ele === 'number') {
-            childNode = (node as ArrayASTNode).items[ele]
+            childNode = (node as ArrayASTNode).items?.[ele]
         } else {
-            childNode = (node as ObjectASTNode).properties.find(prop => prop.keyNode.value === ele)?.valueNode
+            childNode = (node as ObjectASTNode).properties?.find(prop => prop.keyNode.value === ele)?.valueNode
         }
         if (childNode) {
             return this.navigateNodes(childNode, (path.shift(), path))
@@ -444,7 +446,7 @@ export class JsonSchemaHelper {
                 nextNode = nextNode.parent
             }
         } else {
-            nextNode = node?.type === 'object' ? node.properties.find(prop => prop.keyNode.value === ele.push)?.valueNode : undefined
+            nextNode = node?.type === 'object' ? node.properties?.find(prop => prop.keyNode.value === ele.push)?.valueNode : undefined
         }
         return this.navigateRelativePath(nextNode, path.slice(1))
     }

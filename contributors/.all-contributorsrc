@@ -4,21 +4,12 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "files": [
-    "3.0.0.md",
+    "3.1.x.md",
     "../README.md"
   ],
   "imageSize": 64,
   "contributorTemplate": "<a href=\"<%= contributor.profile %>\"><img src=\"<%= contributor.avatar_url %>\" width=\"<%= options.imageSize %>px;\" alt=\"\"/><br /><sub><b><%= contributor.name.replace(new RegExp('\\\\|', 'g'), '&#124;') %></b></sub></a></td><td align=\"left\"><%= contributor.details ? contributor.details.map(v => `<a href=\"${v.link && v.link.startsWith('http') ? v.link : `https://github.com/SPGoding/datapack-language-server/${v.link || 'blob/master/CONTRIBUTING.md'}`}\" target=\"_blank\" title=\"${options.types[v.type].description}\">${options.types[v.type].symbol} ${v.text}</a>`).join('<br>') : '' %>",
   "contributors": [
-    {
-      "name": "AOOAcat",
-      "avatar_url": "https://www.mcbbs.net/uc_server/data/avatar/002/11/39/76_avatar_big.jpg",
-      "profile": "https://www.mcbbs.net/home.php?mod=space&uid=2113976",
-      "contributions": [],
-      "details": [
-        { "type": "bug", "link": "issues/724", "text": "#724" }
-      ]
-    },
     {
       "name": "Arcensoth",
       "avatar_url": "https://avatars2.githubusercontent.com/u/1885643?s=460&u=6c40bfd2701329a442810831d3a2cf954c8cf5de&v=4",
@@ -47,21 +38,12 @@
       ]
     },
     {
-      "name": "Ghoulboy",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/53367549?s=460&v=4",
-      "profile": "https://github.com/Ghoulboy78",
+      "name": "Devon7925",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/22968971?s=400&v=4",
+      "profile": "https://github.com/Devon7925",
       "contributions": [],
       "details": [
-        { "type": "localization", "link": "commits?author=Ghoulboy78", "text": "Italian (it)" }
-      ]
-    },
-    {
-      "name": "K_bai",
-      "avatar_url": "https://pic1.afdiancdn.com/user/f34c5d62954411e8948a52540025c377/avatar/a08952a177bcf9aa806e710c0d695dc3_w719_h720_s657.jpg?imageView2/1/w/240/h/240",
-      "profile": "https://afdian.net/@k_bai",
-      "contributions": [],
-      "details": [
-        { "type": "coffee", "link": "https://github.com/sponsors/SPGoding", "text": "Coffee" }
+        { "type": "bug", "link": "issues/703", "text": "#703" }
       ]
     },
     {
@@ -70,11 +52,16 @@
       "profile": "https://github.com/misode",
       "contributions": [],
       "details": [
-        { "type": "dependency", "link": "https://github.com/misode/minecraft-schemas", "text": "Maintains minecraft-schemas repository" },
-        { "type": "code", "link": "pull/711", "text": "#711" },
-        { "type": "ideas", "link": "issues/445", "text": "#445" },
-        { "type": "bug", "link": "issues/592", "text": "#592" },
-        { "type": "bug", "link": "issues/593", "text": "#593" }
+        { "type": "dependency", "link": "https://github.com/misode/minecraft-schemas", "text": "Maintains minecraft-schemas repository" }
+      ]
+    },
+    {
+      "name": "MulverineX",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/12068027?s=460&u=525f7b144a55b7d894a75ee023baf9c469250c4b&v=4",
+      "profile": "https://github.com/MulverineX",
+      "contributions": [],
+      "details": [
+        { "type": "bug", "link": "issues/747", "text": "#747" }
       ]
     },
     {
@@ -83,10 +70,9 @@
       "profile": "https://github.com/NeunEinser",
       "contributions": [],
       "details": [
-        { "type": "localization", "link": "commits?author=NeunEinser", "text": "German (de)" },
-        { "type": "bug", "link": "issues/652", "text": "#652" },
-        { "type": "bug", "link": "issues/653", "text": "#653" },
-        { "type": "bug", "link": "issues/654", "text": "#654" }
+        { "type": "ideas", "link": "issues/736", "text": "#736" },
+        { "type": "bug", "link": "issues/739", "text": "#739" },
+        { "type": "bug", "link": "issues/748", "text": "#748" }
       ]
     },
     {
@@ -99,65 +85,29 @@
       ]
     },
     {
-      "name": "boon4681",
-      "avatar_url": "https://cdn.discordapp.com/avatars/485428324638916608/c10510b1dfa7a8174f3a1001618cafa9.webp?size=256",
+      "name": "barraIhsan",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/57800056?s=400&u=95f69213851b71fc684cfd2c79b47c2bbaf0a47e&v=4",
+      "profile": "https://github.com/barraIhsan",
       "contributions": [],
       "details": [
-        { "type": "bug", "link": "issues/681", "text": "#681" }
+        { "type": "bug", "link": "issues/769", "text": "#769" }
       ]
     },
     {
-      "name": "eke0909",
-      "avatar_url": "https://avatars0.githubusercontent.com/u/50884607?s=400&v=4",
-      "profile": "https://github.com/eke0909",
+      "name": "chawdan",
+      "avatar_url": "https://cdn.discordapp.com/avatars/259792693368979458/ec53c2ef95e503b3d81284c6e9cf2415.webp?size=256",
       "contributions": [],
       "details": [
-        { "type": "bug", "link": "issues/700", "text": "#700" }
+        { "type": "bug", "link": "issues/765", "text": "#765" }
       ]
     },
     {
-      "name": "kakagRou",
-      "avatar_url": "https://www.mcbbs.net/uc_server/avatar.php?uid=10240&size=middle",
-      "profile": "https://www.mcbbs.net/home.php?mod=space&uid=10240",
+      "name": "zyjking",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/37742023?s=400&v=4",
+      "profile": "https://github.com/zyjking",
       "contributions": [],
       "details": [
         { "type": "coffee", "link": "https://github.com/sponsors/SPGoding", "text": "Coffee" }
-      ]
-    },
-    {
-      "name": "lakejason0",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/36039861?s=460&v=4",
-      "profile": "https://github.com/lakejason0",
-      "contributions": [],
-      "details": [
-        { "type": "localization", "link": "commits?author=lakejason0", "text": "Chinese (Traditional) (zh-tw)" },
-        { "type": "bug", "link": "issues/655", "text": "#655" }
-      ]
-    },
-    {
-      "name": "mathaym25",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/35702771?s=460&u=393d01acff13df6e83beb953bd6f916f514f5141&v=4",
-      "profile": "https://github.com/mathaym25",
-      "contributions": [],
-      "details": [
-        { "type": "bug", "link": "issues/434", "text": "#434" }
-      ]
-    },
-    {
-      "name": "pca006132",
-      "avatar_url": "https://avatars3.githubusercontent.com/u/12198657?s=460&v=4",
-      "profile": "https://github.com/pca006132",
-      "contributions": [],
-      "details": [
-        { "type": "ideas", "link": "issues/605", "text": "#605" }
-      ]
-    },
-    {
-      "name": "Ξи",
-      "avatar_url": "https://cdn.discordapp.com/avatars/107952648312860672/c168fcedcbfebe58bf14034920945d7a.webp?size=256",
-      "contributions": [],
-      "details": [
-        { "type": "bug", "link": "issues/660", "text": "#660" }
       ]
     }
   ],

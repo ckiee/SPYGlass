@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 
+import clone from 'clone'
 import { promises as fsp } from 'fs'
 import path from 'path'
 import { BlockDefinition } from '../types/BlockDefinition'
@@ -31,28 +32,32 @@ export const FallbackVanillaData: VanillaData = {
     Registry: FallbackRegistry
 }
 
-export const VanillaDataCache: {
-    BlockDefinition: Record<string, Promise<BlockDefinition>>,
-    NamespaceSummary: Record<string, Promise<NamespaceSummary>>,
-    Nbtdoc: Record<string, Promise<nbtdoc.Root>>,
-    Registry: Record<string, Promise<Registry>>
-} = {
-    BlockDefinition: { '1.16.2': Promise.resolve(FallbackBlockDefinition) },
-    NamespaceSummary: { '20w28a': Promise.resolve(FallbackNamespaceSummary) },
-    Nbtdoc: { '1.16.2': Promise.resolve(FallbackNbtdoc) },
-    Registry: { '1.16.2': Promise.resolve(FallbackRegistry) }
+export function getVanillaDataCache(): {
+    BlockDefinition: { [version: string]: Promise<BlockDefinition> },
+    NamespaceSummary: { [version: string]: Promise<NamespaceSummary> },
+    Nbtdoc: { [version: string]: Promise<nbtdoc.Root> },
+    Registry: { [version: string]: Promise<Registry> }
+} {
+    return clone({
+        BlockDefinition: { '20w45a': Promise.resolve(FallbackBlockDefinition) },
+        NamespaceSummary: { '20w45a': Promise.resolve(FallbackNamespaceSummary) },
+        Nbtdoc: { '1.16.2': Promise.resolve(FallbackNbtdoc) },
+        Registry: { '20w45a': Promise.resolve(FallbackRegistry) }
+    })
 }
+
+export const VanillaDataCache = getVanillaDataCache()
 
 export type DataType = 'BlockDefinition' | 'NamespaceSummary' | 'Nbtdoc' | 'Registry'
 
 export type DataSource = 'GitHub' | '码云'
 
-function getUri(source: DataSource, maintainer: string, name: string, path: string) {
-    if (source === 'GitHub') {
-        return `https://raw.githubusercontent.com/${maintainer}/${name}/${path}`
-    } else {
-        return `https://gitee.com/SPGoding/${name}/raw/${path}`
-    }
+function getUri(_source: DataSource, maintainer: string, name: string, path: string) {
+    // if (source === 'GitHub') {
+    return `https://raw.githubusercontent.com/${maintainer}/${name}/${path}`
+    // } else {
+    //     return `https://gitee.com/SPGoding/${name}/raw/${path}`
+    // }
 }
 
 function getReportUri(type: DataType, source: DataSource, version: string, processedVersions: string[], isLatestSnapshot: boolean) {
@@ -65,9 +70,9 @@ function getReportUri(type: DataType, source: DataSource, version: string, proce
             }
         case 'NamespaceSummary':
             if (processedVersions.includes(version)) {
-                return getUri(source, 'Arcensoth', 'mcdata', `${isLatestSnapshot ? 'master' : version}/processed/data/minecraft/data.min.json`)
+                return getUri(source, 'SPGoding', 'vanilla-datapack', `${isLatestSnapshot ? 'summary' : `${version}-summary`}/summary/flattened.min.json`)
             } else {
-                throw new Error(`No namespace summary for version ${version}.`)
+                return getUri(source, 'SPGoding', 'vanilla-datapack', 'summary/summary/flattened.min.json')
             }
         case 'Nbtdoc':
             return getUri(source, 'Yurihaia', 'mc-nbtdoc', `${isLatestSnapshot ? 'generated' : `${version}-gen`}/build/generated.json`)

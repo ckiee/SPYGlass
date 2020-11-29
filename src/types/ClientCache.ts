@@ -43,6 +43,7 @@ export const FileTypes = [
     'dimension',
     'dimension_type',
     'function',
+    'item_modifier',
     'loot_table',
     'predicate',
     'recipe',
@@ -144,7 +145,11 @@ export interface CacheUnit extends Partial<Record<CacheUnitPositionType, CachePo
     /**
      * The user-defined documentation for the unit.
      */
-    doc?: string
+    doc?: string,
+    /**
+     * Additional value for this unit. Currently it's only used by aliases.
+     */
+    foo?: any
 }
 
 export interface CacheVisibility {
@@ -161,10 +166,6 @@ export interface CachePosition extends TextRange {
      * An array of identities describing the visibility of this element.
      */
     visibility?: CacheVisibility[],
-    /**
-     * The scope of this position.
-     */
-    scope?: TextRange,
     startLine?: number,
     startChar?: number,
     endLine?: number,
@@ -259,8 +260,15 @@ export function combineCache(base: ClientCache = {}, override: ClientCache = {},
                         addPos(overridePos, ansUnit[type]!)
                     }
                 }
-                if (overrideUnit.doc) {
+                if (overrideUnit.doc !== undefined) {
                     ansUnit.doc = overrideUnit.doc
+                } else {
+                    delete ansUnit.doc
+                }
+                if (overrideUnit.foo !== undefined) {
+                    ansUnit.foo = overrideUnit.foo
+                } else {
+                    delete ansUnit.foo
                 }
             }
         }
@@ -307,7 +315,10 @@ export function getCacheVisibilities(visibility: 'private' | 'internal' | 'publi
     return ans
 }
 
-export function testID(service: DatapackLanguageService, visibility: CacheVisibility | CacheVisibility[] = [], forType: FileType, forID: IdentityNode, definitionUri: string | undefined, config: Config): boolean {
+export function testID(service: DatapackLanguageService, visibility: CacheVisibility | CacheVisibility[] | null = [], forType: FileType, forID: IdentityNode, definitionUri: string | undefined, config: Config): boolean {
+    if (!visibility) {
+        return true
+    }
     if (visibility instanceof Array) {
         if (visibility.length) {
             return visibility.some(v => testID(service, v, forType, forID, definitionUri, config))

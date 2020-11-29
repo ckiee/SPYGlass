@@ -30,7 +30,7 @@ import { TokenType } from '../types/Token'
 import { getNbtdocRegistryId } from '../utils'
 
 /**
- * Command tree of Minecraft Java Edition 19w41a commands.
+ * Command tree of Minecraft Java Edition 1.15.2 commands.
  */
 /* istanbul ignore next */
 export const CommandTree: ICommandTree = {
@@ -2245,7 +2245,7 @@ export const CommandTree: ICommandTree = {
                     parser: new LiteralArgumentParser('entity'),
                     children: {
                         target: {
-                            parser: new EntityArgumentParser('single', 'entities'),
+                            parser: new EntityArgumentParser('multiple', 'entities'),
                             children: {
                                 eyes_feet: {
                                     parser: new LiteralArgumentParser('eyes', 'feet'),
@@ -2273,7 +2273,6 @@ export const CommandTree: ICommandTree = {
             parser: new LiteralArgumentParser('in'),
             children: {
                 dimension: {
-                    // parser: new IdentityArgumentParser('minecraft:dimension_type'),
                     parser: new IdentityArgumentParser(['minecraft:overworld', 'minecraft:the_end', 'minecraft:the_nether'], undefined, undefined, true),
                     children: {
                         subcommand: {

@@ -2308,7 +2308,7 @@ export const CommandTree: ICommandTree = {
                                                 const key = `alias/${parser}` as CacheType
                                                 parsedLine.cache = {
                                                     [key]: {
-                                                        [alias.valueOf()]: { doc: value.valueOf(), def: [alias[NodeRange]], ref: [] }
+                                                        [alias.valueOf()]: { foo: value.valueOf(), def: [alias[NodeRange]], ref: [] }
                                                     }
                                                 }
                                             }
@@ -2723,7 +2723,7 @@ export const CommandTree: ICommandTree = {
                     parser: new LiteralArgumentParser('entity'),
                     children: {
                         target: {
-                            parser: new EntityArgumentParser('single', 'entities'),
+                            parser: new EntityArgumentParser('multiple', 'entities'),
                             children: {
                                 eyes_feet: {
                                     parser: new LiteralArgumentParser('eyes', 'feet'),

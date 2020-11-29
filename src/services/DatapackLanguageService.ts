@@ -8,7 +8,7 @@ import { fixFileCommandHandler, onCallHierarchyIncomingCalls, onCallHierarchyOut
 import { plugins } from '..'
 import { getCommandTree } from '../data/CommandTree'
 import { getJsonSchemas, getJsonSchemaType, JsonSchemaType } from '../data/JsonSchema'
-import { getVanillaData, VanillaData } from '../data/VanillaData'
+import { getVanillaData, getVanillaDataCache, VanillaData, VanillaDataCache } from '../data/VanillaData'
 import { getSelectedNode, IdentityNode } from '../nodes'
 import { ParserCollection } from '../parsers'
 import { Contributions, LanguageConfig } from '../plugins/LanguageConfigImpl'
@@ -538,7 +538,7 @@ export class DatapackLanguageService {
                 return null
             }
             const ctx = await this.getParsingContext({ cursor: offset, textDoc, uri })
-            return onHover({ node, ctx })
+            return onHover({ com: node, ctx })
         } else {
             const vanillaData = await this.getVanillaData(config)
             const jsonSchemas = await this.getJsonSchemas(config, vanillaData)
@@ -740,6 +740,15 @@ export class DatapackLanguageService {
 
     async onJSEvaluation(uri: Uri, range: lsp.Range) {
 
+    }
+
+    async onClearVanillaData() {
+        const newCache = getVanillaDataCache()
+        VanillaDataCache.BlockDefinition = newCache.BlockDefinition
+        VanillaDataCache.NamespaceSummary = newCache.NamespaceSummary
+        VanillaDataCache.Nbtdoc = newCache.Nbtdoc
+        VanillaDataCache.Registry = newCache.Registry
+        // TODO: remove files in globalStoragePath
     }
 
     async createFile(root: Uri, type: FileType, id: IdentityNode) {

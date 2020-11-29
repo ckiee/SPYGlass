@@ -1,10 +1,13 @@
 import { FileType } from '../types/ClientCache'
 
+export const GeneralPathPattern = 'data/**/*.{json,mcfunction,nbt}'
+
 export const PathPatterns: Record<FileType, string> = {
     advancement: 'data/*/advancements/**/*.json',
     dimension: 'data/*/dimension/**/*.json',
     dimension_type: 'data/*/dimension_type/**/*.json',
     function: 'data/*/functions/**/*.mcfunction',
+    item_modifier: 'data/*/item_modifiers/**/*.json',
     loot_table: 'data/*/loot_tables/**/*.json',
     predicate: 'data/*/predicates/**/*.json',
     recipe: 'data/*/recipes/**/*.json',
